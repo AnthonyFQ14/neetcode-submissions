@@ -1,0 +1,61 @@
+class ListNode:
+    def __init__(self, val, next_node = None):
+        self.val = val
+        self.next = next_node 
+
+class LinkedList:
+    
+    def __init__(self):
+        self.head = ListNode(-1)
+        self.tail = self.head
+    
+    def get(self, index: int) -> int:
+        current = self.head.next
+        count = 0
+        while current:
+            if count == index:
+                return current.val
+            count += 1
+            current = current.next
+        return -1
+
+    def insertHead(self, val: int) -> None:
+        
+        new_node = ListNode(val)
+        new_node.next = self.head.next
+        self.head.next = new_node
+        if not new_node.next:
+            self.tail = new_node
+
+
+    def insertTail(self, val: int) -> None:
+        new_node = ListNode(val)
+        self.tail.next = new_node
+        self.tail = new_node
+
+    def remove(self, index: int) -> bool:
+        
+        curr = self.head
+
+        i = 0
+        while i < index and curr:
+            i += 1
+            curr = curr.next
+
+            if i == index and curr.next:
+                curr.next = curr.next.next
+                return True
+            elif i == index and not curr.next.next:
+                curr.next = None
+                self.tail = curr
+                return True
+        return False
+
+
+    def getValues(self) -> List[int]:
+        values = []
+        curr = self.head.next
+        while curr:
+            values.append(curr.val)
+            curr = curr.next
+        return values

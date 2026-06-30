@@ -1,0 +1,30 @@
+# each row has to not have duplicate numbers 1 - 9
+# each column has to not have duplicate numbers 1 - 9
+# each 3 x 3 cannot have duplicates 1 - 9
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        
+        rows = defaultdict(set)
+        cols = defaultdict(set)
+        squares = defaultdict(set)
+
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == ".":
+                    continue
+                if ( board[r][c] in rows[r]
+                     or board[r][c] in cols[c] 
+                     or board[r][c] in squares[(row // 3), c // 3]):
+                     return False
+                
+                rows[r].add(board[r][c])
+                cols[r].add(board[r][c])
+                squares[(r // 3), (c // 3)].add(board[r][c])
+
+        return True
+
+
+
+
